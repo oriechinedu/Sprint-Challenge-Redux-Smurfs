@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import styled from 'styled-components'
-import Smurf from './Smurf';
-import { connect } from 'react-redux'
-import { fetchSmurfs } from '../actions'
-import Spinner from './spinner/Spinner'
+import React, { Component } from "react";
+import styled from "styled-components";
+import Smurf from "./Smurf";
+import { connect } from "react-redux";
+import { fetchSmurfs, deleteSmurf } from "../actions";
+import Spinner from "./spinner/Spinner";
 
 const SmurfWrapper = styled.div`
   width: 800px;
@@ -32,7 +32,7 @@ const SmurfWrapper = styled.div`
     text-align: center;
     &:after {
       position: absolute;
-      content: '';
+      content: "";
       height: 3px;
       background: orange;
       width: 30%;
@@ -40,50 +40,61 @@ const SmurfWrapper = styled.div`
       left: 0;
     }
   }
-`
+`;
 class Smurfs extends Component {
   componentDidMount() {
     this.props.fetchSmurfs();
   }
+
+  deleteSmurf = id => {
+    this.props
+      .deleteSmurf(id)
+      .then(() => {
+        alert("Smurf deleted");
+      })
+      .catch(() => {
+        alert(this.props.error);
+      });
+  };
   render() {
-    let contentToRender = <Spinner />
+    let contentToRender = <Spinner />;
     if (this.props.smurfs) {
       contentToRender = (
         <React.Fragment>
-        <h1>Smurf Village</h1>
-        <ul>
-          {this.props.smurfs.map(smurf => {
-            return (
-              <Smurf
-                name={smurf.name}
-                id={smurf.id}
-                age={smurf.age}
-                height={smurf.height}
-                key={smurf.id}
-                deleteSmurf={this.props.deleteSmurf}
-              />
-            );
-          })}
-        </ul>
-      </React.Fragment>
-      )
+          <h1>Smurf Village</h1>
+          <ul>
+            {this.props.smurfs.map(smurf => {
+              return (
+                <Smurf
+                  name={smurf.name}
+                  id={smurf.id}
+                  age={smurf.age}
+                  height={smurf.height}
+                  key={smurf.id}
+                  deleteSmurf={this.props.deleteSmurf}
+                />
+              );
+            })}
+          </ul>
+        </React.Fragment>
+      );
     }
-    return (
-      <SmurfWrapper>
-        {contentToRender}
-      </SmurfWrapper>
-    );
+    return <SmurfWrapper>{contentToRender}</SmurfWrapper>;
   }
 }
 
 Smurf.defaultProps = {
- smurfs: [],
+  smurfs: []
 };
 
 const mapStateToProps = state => {
   return {
     smurfs: state.smurfs,
-    isLoading: state.isLoading
-  }
-}
-export default connect(mapStateToProps,{fetchSmurfs })(Smurfs);
+    isLoading: state.isLoading,
+    error: state.error
+  };
+};
+export default connect(
+  mapStateToProps,
+  { fetchSmurfs, deleteSmurf }
+)(Smurfs);

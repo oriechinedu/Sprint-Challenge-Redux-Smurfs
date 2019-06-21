@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { addSmurf } from '../actions'
 import { connect } from 'react-redux'
-
-const API_BASE_URL = "http://localhost:3333/smurfs";
 
 const FormWrapper = styled.div`
   width: 100%;

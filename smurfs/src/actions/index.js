@@ -49,3 +49,15 @@ export const addSmurf = payload => dispatch => {
       dispatch(requestFailed(err.message));
     });
 };
+
+export const deleteSmurf = smurfId => dispatch => {
+  dispatch(requesting());
+  return axios
+    .delete(`${BASE_URL}/${smurfId}`)
+    .then(res => {
+      dispatch(requestSucceeded(res.data));
+    })
+    .catch(err => {
+      dispatch(requestFailed(err.message));
+    });
+};
