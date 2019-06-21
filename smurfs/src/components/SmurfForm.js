@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { addSmurf } from '../actions'
+import { connect } from 'react-redux'
 
 const API_BASE_URL = "http://localhost:3333/smurfs";
 
@@ -53,13 +55,13 @@ class SmurfForm extends Component {
     event.preventDefault();
     // add code to create the smurf using the api
     const newSurf = { ...this.state.form };
-    axios.post(API_BASE_URL, newSurf)
+    this.props.addSmurf(newSurf)
     .then(() => {
-      this.props.update()
+      alert('success')
       this.props.history.push('/')
     })
-    .catch(err => {
-      console.log(err.message)
+    .catch(() => {
+      console.log(this.props.error)
     }) 
     this.setState({
       name: "",
@@ -108,5 +110,10 @@ class SmurfForm extends Component {
     );
   }
 }
-
-export default SmurfForm;
+const mapStateToProps = state => {
+  return {
+    isLoading: state.isLoading,
+    error: state.error
+  }
+}
+export default connect(mapStateToProps, { addSmurf})(SmurfForm);

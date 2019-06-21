@@ -31,7 +31,18 @@ export const fetchSmurfs = () => dispatch => {
   return axios
     .get(BASE_URL)
     .then(res => {
-      console.log(res.data);
+      dispatch(requestSucceeded(res.data));
+    })
+    .catch(err => {
+      dispatch(requestFailed(err.message));
+    });
+};
+
+export const addSmurf = payload => dispatch => {
+  dispatch(requesting());
+  return axios
+    .post(BASE_URL, payload)
+    .then(res => {
       dispatch(requestSucceeded(res.data));
     })
     .catch(err => {
