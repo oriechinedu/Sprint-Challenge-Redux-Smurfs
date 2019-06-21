@@ -2,7 +2,7 @@
   Be sure to import in all of the action types from `../actions`
 */
 import { SUCCESS, FAILURE, REQUESTING } from "../actions";
-import { bindActionCreators } from "redux";
+
 
 /*
  Your initial/default state for this project could *Although does not have to* look a lot like this
