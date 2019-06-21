@@ -61,3 +61,15 @@ export const deleteSmurf = smurfId => dispatch => {
       dispatch(requestFailed(err.message));
     });
 };
+
+export const updateSmurf = (smurf, smurfId) => dispatch => {
+  dispatch(requesting());
+  return axios
+    .put(`${BASE_URL}/${smurfId}`, smurf)
+    .then(res => {
+      dispatch(requestSucceeded(res.data));
+    })
+    .catch(err => {
+      dispatch(requestFailed(err.message));
+    });
+}

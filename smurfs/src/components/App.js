@@ -5,6 +5,7 @@ import GlobalStyle from "./styled/GlobalStyle";
 import Header from './Header'
 import { Route, Switch } from 'react-router-dom'
 import SmurfFrom from './SmurfForm'
+import EditSmurfFrom from './EditSmurfForm'
 /*
  to wire this component up you're going to need a few things.
  I'll let you do this part on your own. 
@@ -27,6 +28,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Smurfs} />
             <Route path="/smurf-form" component={SmurfFrom} />
+            <Route path="/smurfs/:smurfId" render={props => <EditSmurfFrom {...props} />} />
           </Switch>
         </AppWrapper>
       </React.Fragment>

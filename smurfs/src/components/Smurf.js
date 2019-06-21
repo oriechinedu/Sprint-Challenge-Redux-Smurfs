@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
-import { FaRegTrashAlt } from 'react-icons/fa'
-const SmuffWrapper = styled.div`
+import { FaRegTrashAlt, FaRegEdit } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+
+const SmurfWrapper = styled.div`
   width: 250px;
   height: 150px;
   margin: 1rem;
@@ -31,14 +33,24 @@ const DeleteBtn = styled(FaRegTrashAlt)`
  bottom: 20px;
  cursor: pointer;
 `
+const EditBtn = styled(FaRegEdit)`
+  color: orange;
+ position: absolute;
+ right: 50px;
+ bottom: 20px;
+ cursor: pointer;
+`
 const Smurf = props => {
   return (
-    <SmuffWrapper>
+    <SmurfWrapper>
       <h3>{props.name}</h3>
       <strong>{props.height} tall</strong>
       <p>{props.age} smurf years old</p>
       <DeleteBtn  onClick={() => props.deleteSmurf(props.id)}/>
-    </SmuffWrapper>
+      <Link to={`/smurfs/${props.id}`}>
+        <EditBtn />
+      </Link>
+    </SmurfWrapper>
   );
 };
 
